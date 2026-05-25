@@ -6,45 +6,51 @@
 
 :root,
 :root[data-theme='light'] {
-  --app-bg: #e9edf2;
+  --app-bg: #f5f7fa;
   --app-surface: #ffffff;
-  --app-surface-soft: #f3f4f6;
-  --app-border: #dfe4ea;
-  --app-text: #303841;
-  --app-muted: #87929d;
-  --app-primary: #45a9c9;
-  --app-primary-dark: #2f8fb3;
-  --app-primary-soft: rgba(69, 169, 201, 0.14);
-  --app-gradient: linear-gradient(135deg, #45a9c9 0%, #6dd7a7 100%);
-  --app-sidebar: #2f363d;
-  --app-sidebar-soft: #27313a;
-  --app-sidebar-strong: #263039;
-  --app-sidebar-footer: #262c32;
-  --app-sidebar-text: #d9dde1;
-  --app-sidebar-muted: #9ba4ad;
-  --app-shadow: 0 1px 2px rgba(31, 41, 55, 0.08);
-  --app-shadow-strong: 0 20px 60px rgba(31, 41, 55, 0.18);
+  --app-surface-soft: #f6f3f2;
+  --app-surface-muted: #f0edec;
+  --app-border: #bdcab9;
+  --app-text: #1c1b1b;
+  --app-muted: #3e4a3d;
+  --app-primary: #006e2a;
+  --app-primary-dark: #00531e;
+  --app-primary-soft: rgba(31, 168, 74, 0.14);
+  --app-secondary: #005cba;
+  --app-tertiary: #d47e00;
+  --app-gradient: linear-gradient(135deg, #1fa84a 0%, #0066cc 100%);
+  --app-sidebar: rgba(255, 255, 255, 0.72);
+  --app-sidebar-soft: rgba(246, 243, 242, 0.82);
+  --app-sidebar-strong: #e8f5e9;
+  --app-sidebar-footer: rgba(255, 255, 255, 0.72);
+  --app-sidebar-text: #1c1b1b;
+  --app-sidebar-muted: #3e4a3d;
+  --app-shadow: 0 14px 35px rgba(0, 92, 186, 0.08);
+  --app-shadow-strong: 0 24px 70px rgba(0, 92, 186, 0.16);
 }
 
 :root[data-theme='dark'] {
-  --app-bg: #111827;
-  --app-surface: #1f2937;
-  --app-surface-soft: #273244;
-  --app-border: #374151;
-  --app-text: #f9fafb;
-  --app-muted: #a8b3c2;
-  --app-primary: #58c2cf;
-  --app-primary-dark: #7dd3df;
-  --app-primary-soft: rgba(88, 194, 207, 0.18);
-  --app-gradient: linear-gradient(135deg, #0f172a 0%, #164e63 100%);
-  --app-sidebar: #0f172a;
-  --app-sidebar-soft: #172033;
-  --app-sidebar-strong: #1e293b;
-  --app-sidebar-footer: #0b1120;
-  --app-sidebar-text: #e5e7eb;
-  --app-sidebar-muted: #94a3b8;
-  --app-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
-  --app-shadow-strong: 0 24px 70px rgba(0, 0, 0, 0.38);
+  --app-bg: #0a0a0a;
+  --app-surface: #111111;
+  --app-surface-soft: #1c1b1b;
+  --app-surface-muted: #313030;
+  --app-border: #304332;
+  --app-text: #f3f0ef;
+  --app-muted: #bdcab9;
+  --app-primary: #61df79;
+  --app-primary-dark: #7efc92;
+  --app-primary-soft: rgba(97, 223, 121, 0.16);
+  --app-secondary: #aac7ff;
+  --app-tertiary: #ffb870;
+  --app-gradient: linear-gradient(135deg, #1fa84a 0%, #0066cc 100%);
+  --app-sidebar: rgba(17, 17, 17, 0.72);
+  --app-sidebar-soft: rgba(28, 27, 27, 0.86);
+  --app-sidebar-strong: rgba(97, 223, 121, 0.16);
+  --app-sidebar-footer: rgba(17, 17, 17, 0.72);
+  --app-sidebar-text: #f3f0ef;
+  --app-sidebar-muted: #bdcab9;
+  --app-shadow: 0 14px 35px rgba(0, 92, 186, 0.2);
+  --app-shadow-strong: 0 24px 70px rgba(0, 92, 186, 0.28);
 }
 
 // ============================================================================
@@ -73,12 +79,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
 // ============================================================================
 // TYPOGRAPHIE
 // ============================================================================
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: $spacing-md 0;
+  font-family: 'Plus Jakarta Sans', $font-family-base;
   font-weight: $font-weight-bold;
   line-height: $line-height-lg;
   color: var(--app-text);
@@ -124,13 +143,14 @@ a {
 
   // Bouton primaire
   &.btn-primary {
-    background-color: $primary;
-    border-color: var(--app-primary);
+    background: var(--app-gradient);
+    border-color: transparent;
     color: $white;
 
     &:hover {
-      background-color: $primary-dark;
-      border-color: $primary-dark;
+      background: var(--app-gradient);
+      border-color: transparent;
+      filter: saturate(1.08);
     }
 
     &:active,
@@ -230,9 +250,9 @@ a {
 // ============================================================================
 
 .card {
-  border-radius: $border-radius-lg;
-  border-color: $gray-200;
-  box-shadow: $shadow-base;
+  border-radius: $border-radius-xl;
+  border-color: var(--app-border);
+  box-shadow: var(--app-shadow);
   transition: $transition-base;
 
   &:hover {
