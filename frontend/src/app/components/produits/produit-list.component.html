@@ -1,11 +1,23 @@
 <section class="crud-page">
   <div class="page-head">
     <div>
+      <span class="eyebrow">Product Management</span>
       <h1>Produits</h1>
-      <p>Donnees chargees depuis le backend Spring Boot.</p>
+      <p>Manage your inventory, pricing, and stock levels across all locations.</p>
     </div>
 
-    <a *ngIf="canModifyProduits" routerLink="/produits/new" class="btn btn-primary">Ajouter</a>
+    <div class="summary-cards">
+      <article class="summary-card">
+        <span class="summary-icon">▣</span>
+        <small>Total produits</small>
+        <strong>{{ produits().length || 0 }}</strong>
+      </article>
+      <article class="summary-card warning">
+        <span class="summary-icon">!</span>
+        <small>Stock bas</small>
+        <strong>{{ filteredProduits.length }}</strong>
+      </article>
+    </div>
   </div>
 
   <div *ngIf="loading()" class="state-panel">
@@ -18,8 +30,11 @@
   </div>
 
   <div *ngIf="!loading()" class="filter-panel filter-panel--simple">
+    <button type="button" class="filter-chip">
+      <span></span>
+      Filters
+    </button>
     <div class="filter-field">
-      <label for="searchTerm">Recherche</label>
       <input
         id="searchTerm"
         name="searchTerm"
@@ -29,7 +44,8 @@
       >
     </div>
 
-    <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">Reinitialiser</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">Reset</button>
+    <a *ngIf="canModifyProduits" routerLink="/produits/new" class="btn btn-primary">+ New Product</a>
   </div>
 
   <article *ngIf="!loading() && !error()" class="data-panel">
@@ -45,14 +61,12 @@
       <table class="table align-middle">
         <thead>
           <tr>
-            <th>Nom</th>
-            <th>Code</th>
+            <th>Product & SKU</th>
             <th>Barcode</th>
-            <th>Prix</th>
-            <th>Stock min.</th>
-            <th>Quantite</th>
-            <th>Categorie</th>
-            <th>Taxe</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Tax</th>
             <th class="text-end">Actions</th>
           </tr>
         </thead>
@@ -60,14 +74,19 @@
           <tr *ngFor="let produit of filteredProduits">
             <td>
               <strong>{{ getProduitName(produit) }}</strong>
+              <small>SKU: {{ produit.code || '-' }}</small>
               <small *ngIf="produit.entrepriseNom">{{ produit.entrepriseNom }}</small>
             </td>
-            <td>{{ produit.code || '-' }}</td>
             <td>{{ produit.barcode || '-' }}</td>
-            <td>{{ produit.prix || 0 | number:'1.2-2' }}</td>
-            <td>{{ produit.stockMinimum ?? 0 }}</td>
-            <td>{{ produit.quantite || 0 }}</td>
-            <td>{{ produit.categorieNom || '-' }}</td>
+            <td><span class="category-pill">{{ produit.categorieNom || '-' }}</span></td>
+            <td>
+              <strong class="price-value">{{ produit.prix || 0 | number:'1.2-2' }}</strong>
+              <small>Min. {{ produit.stockMinimum ?? 0 }}</small>
+            </td>
+            <td>
+              <strong [class.low-stock]="(produit.quantite || 0) <= (produit.stockMinimum ?? 0)">{{ produit.quantite || 0 }}</strong>
+              <small>{{ (produit.quantite || 0) <= (produit.stockMinimum ?? 0) ? 'LOW STOCK' : 'Normal' }}</small>
+            </td>
             <td>{{ produit.taxeNom || '-' }}</td>
             <td class="text-end">
               <div class="icon-actions">

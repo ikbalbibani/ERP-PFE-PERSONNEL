@@ -1,7 +1,14 @@
 <aside class="sidebar sidebar-fixed">
   <div class="sidebar-brand">
-    <span class="brand-mark">S</span>
-    <span class="brand-name">Sales ERP</span>
+    <span class="brand-mark">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 6h16v12H4V6Zm3 3h10M7 13h5"></path>
+      </svg>
+    </span>
+    <span class="brand-copy">
+      <strong>KwetuPOS</strong>
+      <small>African Innovation</small>
+    </span>
   </div>
 
   <nav class="sidebar-nav" aria-label="Navigation principale">
@@ -57,6 +64,8 @@
       </a>
     </div>
 
+    <div class="nav-section">Configuration</div>
+
     <button type="button" class="nav-link theme-toggle" (click)="themeChange.emit()">
       <span class="nav-icon">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -69,6 +78,10 @@
   </nav>
 
   <div class="sidebar-user">
+    <button type="button" class="register-button" routerLink="/ventes">
+      <span>+</span>
+      Open Register
+    </button>
     <div class="user-summary">
       <span class="user-avatar">{{ userInitials }}</span>
       <div>

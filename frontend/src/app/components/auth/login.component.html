@@ -1,10 +1,35 @@
 <main class="login-shell">
+  <section class="login-story">
+    <div class="story-copy">
+      <span class="story-kicker">KwetuPOS</span>
+      <h1>Empowering African <span>Commerce</span> at Scale</h1>
+      <p>KwetuPOS is the digital backbone for modern retailers. Secure, fluid, and designed for growth.</p>
+    </div>
+
+    <div class="story-visual">
+      <div class="visual-device">
+        <span class="visual-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16v10H4V7Zm3 3h10M7 14h6"></path>
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="trusted-row">
+      <span></span>
+      <span></span>
+      <span></span>
+      <strong>Trusted by 2,500+ businesses nationwide</strong>
+    </div>
+  </section>
+
   <section class="login-card">
     <div class="brand">
-      <span class="brand-mark">S</span>
+      <span class="brand-mark">K</span>
       <div>
-        <h1>Sales ERP</h1>
-        <p>Administration commerciale</p>
+        <h1>Welcome Back</h1>
+        <p>Enter your credentials to access your store</p>
       </div>
     </div>
 
@@ -14,17 +39,17 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="mb-3">
-        <label class="form-label" for="email">Email</label>
-        <input id="email" type="email" class="form-control" formControlName="email" placeholder="admin@sales.local">
+        <label class="form-label" for="email">Business Email</label>
+        <input id="email" type="email" class="form-control" formControlName="email" placeholder="name@business.com">
         <small *ngIf="hasError('email')" class="text-danger">Email valide obligatoire.</small>
       </div>
 
       <div class="mb-3">
-        <label class="form-label" for="password">Mot de passe</label>
+        <label class="form-label" for="password">Password</label>
         <div class="password-row">
           <input id="password" [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password">
           <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
-            {{ showPassword ? 'Masquer' : 'Voir' }}
+            {{ showPassword ? 'Hide' : 'View' }}
           </button>
         </div>
         <small *ngIf="hasError('password')" class="text-danger">Mot de passe obligatoire.</small>
@@ -32,11 +57,11 @@
 
       <label class="form-check mb-4">
         <input type="checkbox" class="form-check-input" formControlName="rememberMe">
-        <span class="form-check-label">Se souvenir de moi</span>
+        <span class="form-check-label">Remember this device</span>
       </label>
 
       <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">
-        {{ isLoading ? 'Connexion...' : 'Se connecter' }}
+        {{ isLoading ? 'Opening...' : 'Open Register' }}
       </button>
     </form>
   </section>

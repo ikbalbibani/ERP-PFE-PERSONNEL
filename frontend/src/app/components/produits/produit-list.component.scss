@@ -1,5 +1,5 @@
 .crud-page {
-  padding: 1.5rem;
+  padding: 2rem 1.75rem;
   background: var(--app-bg);
 }
 
@@ -8,7 +8,7 @@
 .state-panel {
   background: var(--app-surface);
   border: 1px solid var(--app-border);
-  border-radius: 3px;
+  border-radius: 1.5rem;
   box-shadow: var(--app-shadow);
 }
 
@@ -17,19 +17,73 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1rem;
-  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  padding: 1.75rem;
 
   h1 {
-    margin: 0;
+    margin: 0.2rem 0 0;
     color: var(--app-text);
-    font-size: 1.35rem;
-    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
   }
 
   p {
     margin: 0.25rem 0 0;
     color: var(--app-muted);
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  color: var(--app-primary);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 1rem;
+}
+
+.summary-card {
+  min-width: 180px;
+  padding: 1rem;
+  border: 1px solid var(--app-border);
+  border-radius: 0.75rem;
+  background: var(--app-surface);
+
+  .summary-icon {
+    width: 34px;
+    height: 34px;
+    display: inline-grid;
+    place-items: center;
+    margin-bottom: 0.75rem;
+    border-radius: 0.5rem;
+    background: #e8f5e9;
+    color: var(--app-primary);
+    font-weight: 900;
+  }
+
+  small {
+    display: block;
+    color: var(--app-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  strong {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--app-text);
+    font-size: 1rem;
+  }
+
+  &.warning .summary-icon {
+    background: #ffdcbe;
+    color: #8b5000;
   }
 }
 
@@ -42,23 +96,22 @@
 }
 
 .filter-panel {
-  display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(160px, 220px) auto;
-  align-items: end;
+  display: flex;
+  align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
-  padding: 1rem 1.5rem;
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
-  border-radius: 3px;
-  box-shadow: var(--app-shadow);
+  margin-bottom: 1.25rem;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .filter-panel--simple {
-  grid-template-columns: minmax(180px, 1fr) auto;
+  grid-template-columns: none;
 }
 
 .filter-field {
+  flex: 1;
   display: grid;
   gap: 0.35rem;
 
@@ -69,8 +122,60 @@
   }
 }
 
+.filter-chip {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--app-surface-muted);
+  color: var(--app-muted);
+  font-weight: 700;
+
+  span {
+    width: 14px;
+    height: 10px;
+    display: inline-block;
+    border-top: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+  }
+}
+
+.filter-field .form-control {
+  min-height: 44px;
+  border-radius: 999px;
+  background: var(--app-surface);
+}
+
 .data-panel {
-  padding: 0.5rem 1.5rem 1rem;
+  overflow: hidden;
+  padding: 0;
+}
+
+.table {
+  margin: 0;
+
+  thead th {
+    padding: 1.2rem 1.65rem;
+    color: var(--app-muted);
+    background: var(--app-surface-soft);
+    border-bottom: 1px solid var(--app-border);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  tbody td {
+    padding: 1rem 1.65rem;
+    border-color: rgba(189, 202, 185, 0.38);
+  }
+
+  tbody tr:hover {
+    background: rgba(31, 168, 74, 0.045);
+  }
 }
 
 td strong,
@@ -80,6 +185,28 @@ td small {
 
 td small {
   color: var(--app-muted);
+  font-size: 0.72rem;
+}
+
+.category-pill,
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 0.55rem;
+  border-radius: 0.35rem;
+  background: #e0edff;
+  color: #005cba;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.price-value {
+  font-weight: 800;
+}
+
+.low-stock {
+  color: #ba1a1a;
 }
 
 .empty-state {
@@ -102,9 +229,9 @@ td small {
   height: 2rem;
   padding: 0;
   color: #64748b;
-  background: #fff;
-  border: 1px solid #d8e0ea;
-  border-radius: 5px;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
   font-size: 1rem;
   line-height: 1;
   text-decoration: none;
@@ -166,7 +293,7 @@ td small {
   padding: 1.25rem;
   background: var(--app-surface);
   border: 1px solid var(--app-border);
-  border-radius: 6px;
+  border-radius: 1.5rem;
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25);
 
   h2 {
@@ -196,6 +323,12 @@ td small {
   }
 
   .filter-panel {
-    grid-template-columns: 1fr;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .summary-cards {
+    width: 100%;
+    flex-direction: column;
   }
 }
