@@ -1,0 +1,232 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>Gestion du stock</h1>
+      <p>Suivi des quantites, alertes et mouvements par point de vente.</p>
+    </div>
+
+    <a *ngIf="canModifyStocks" routerLink="/stocks/new" class="btn btn-primary">Ajouter</a>
+  </div>
+
+  <div *ngIf="loading()" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement du stock...</span>
+  </div>
+
+  <div *ngIf="error()" class="notification notification--error">
+    <div class="notification__content">{{ error() }}</div>
+  </div>
+
+  <div *ngIf="!loading() && !error()" class="stock-dashboard">
+    <div class="stock-summary-grid">
+      <article class="stock-card">
+        <div>
+          <p class="stock-card__label">Quantite totale</p>
+          <div class="stock-card__value">{{ totalItems }}</div>
+          <div class="stock-card__hint">{{ stocks().length }} lignes de stock</div>
+        </div>
+        <span class="stock-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg>
+        </span>
+      </article>
+
+      <article class="stock-card">
+        <div>
+          <p class="stock-card__label">Stock faible</p>
+          <div class="stock-card__value">{{ lowStockItems }}</div>
+          <div class="stock-card__hint">Sous le seuil minimum</div>
+        </div>
+        <span class="stock-card__icon stock-card__icon--warning" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        </span>
+      </article>
+
+      <article class="stock-card">
+        <div>
+          <p class="stock-card__label">Rupture</p>
+          <div class="stock-card__value">{{ outOfStockItems }}</div>
+          <div class="stock-card__hint">Quantite egale a zero</div>
+        </div>
+        <span class="stock-card__icon stock-card__icon--danger" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 7h18"/><path d="M5 7l1 13h12l1-13"/><path d="M9 7V4h6v3"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+        </span>
+      </article>
+
+      <article class="stock-card">
+        <div>
+          <p class="stock-card__label">Valeur stock</p>
+          <div class="stock-card__value">{{ formatMoney(stockValue) }}</div>
+          <div class="stock-card__hint">Quantite x prix produit</div>
+        </div>
+        <span class="stock-card__icon stock-card__icon--success" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+        </span>
+      </article>
+    </div>
+
+    <article class="data-panel">
+      <div class="stock-panel-header">
+        <h2>Niveaux de stock</h2>
+        <input
+          id="searchTerm"
+          name="searchTerm"
+          class="form-control stock-search"
+          [(ngModel)]="searchTerm"
+          placeholder="Rechercher produit, code, point de vente..."
+        >
+      </div>
+
+      <div *ngIf="stocks().length === 0" class="empty-state">
+        Aucun stock trouve.
+      </div>
+
+      <div *ngIf="stocks().length > 0 && filteredStocks.length === 0" class="empty-state">
+        Aucun stock ne correspond a la recherche.
+      </div>
+
+      <div *ngIf="filteredStocks.length > 0" class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Point vente</th>
+              <th>Quantite</th>
+              <th>Niveau</th>
+              <th>Statut</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let stock of filteredStocks">
+              <td>
+                <strong>{{ getProduitName(stock) }}</strong>
+                <small>{{ getProduitCode(stock) }} - {{ getEntrepriseName(stock) }}</small>
+              </td>
+              <td>{{ getPointVenteName(stock) }}</td>
+              <td>
+                <strong>{{ stock.quantite ?? 0 }}</strong>
+                <small>Seuil: {{ getStockMinimum(stock) }}</small>
+              </td>
+              <td>
+                <div class="stock-progress" aria-hidden="true">
+                  <div
+                    class="stock-progress__bar"
+                    [class.stock-progress__bar--low]="getStockStatus(stock) === 'low'"
+                    [class.stock-progress__bar--out]="getStockStatus(stock) === 'out'"
+                    [style.width.%]="getStockProgress(stock)"
+                  ></div>
+                </div>
+              </td>
+              <td>
+                <span
+                  class="stock-badge"
+                  [class.stock-badge--low]="getStockStatus(stock) === 'low'"
+                  [class.stock-badge--out]="getStockStatus(stock) === 'out'"
+                >
+                  {{ getStockStatusLabel(stock) }}
+                </span>
+              </td>
+              <td class="text-end">
+                <div class="icon-actions">
+                  <a
+                    *ngIf="canModifyStocks"
+                    [routerLink]="['/stocks', stock.id, 'edit']"
+                    class="icon-btn icon-btn--edit"
+                    title="Modifier"
+                    aria-label="Modifier le stock"
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 16 16">
+                      <path d="M15.5 1.5a1.5 1.5 0 0 1 0 2.1l-1 1-3-3 1-1a1.5 1.5 0 0 1 2.1 0l.9.9zM10.8 2.3l3 3L5.9 13.2 3 14l.8-2.9 7-8.8z"/>
+                      <path d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5h6a.5.5 0 0 0 0-1h-6A1.5 1.5 0 0 0 1 2.5v11z"/>
+                    </svg>
+                  </a>
+                  <button
+                    *ngIf="canModifyStocks"
+                    type="button"
+                    class="icon-btn icon-btn--delete"
+                    title="Supprimer"
+                    aria-label="Supprimer le stock"
+                    (click)="openDeleteModal(stock)"
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 16 16">
+                      <path d="M5.5 5.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0v-6z"/>
+                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1h2.5a1 1 0 0 1 1 1zM4.1 4l.9 9.1a1 1 0 0 0 1 .9h4a1 1 0 0 0 1-.9L11.9 4H4.1zM2.5 3h11H2.5z"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="data-panel">
+      <div class="stock-panel-header">
+        <h2>Mouvements de stock recents</h2>
+      </div>
+
+      <div *ngIf="recentStockMovements.length === 0" class="empty-state">
+        Aucun mouvement de stock disponible.
+      </div>
+
+      <div *ngIf="recentStockMovements.length > 0" class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Reference</th>
+              <th>Produit</th>
+              <th>Type mouvement</th>
+              <th>Quantite</th>
+              <th>Point vente</th>
+              <th>Valeur</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let stock of recentStockMovements">
+              <td>{{ getMovementDate(stock) }}</td>
+              <td>STK-{{ stock.id || '-' }}</td>
+              <td>
+                <strong>{{ getProduitName(stock) }}</strong>
+                <small>{{ getProduitCode(stock) }}</small>
+              </td>
+              <td>
+                <span
+                  class="movement-type"
+                  [class.movement-type--output]="getMovementType(stock) === 'OUTPUT'"
+                >
+                  {{ getMovementType(stock) }}
+                </span>
+              </td>
+              <td>{{ stock.quantite ?? 0 }}</td>
+              <td>{{ getPointVenteName(stock) }}</td>
+              <td>{{ formatMoney(getStockValue(stock)) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </div>
+
+  <div *ngIf="selectedStock" class="modal-backdrop" (click)="closeDeleteModal()">
+    <div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="deleteStockTitle" (click)="$event.stopPropagation()">
+      <h2 id="deleteStockTitle">Confirmer la suppression</h2>
+      <p>
+        Voulez-vous supprimer le stock
+        <strong>{{ getProduitName(selectedStock) }}</strong>
+        du point de vente
+        <strong>{{ getPointVenteName(selectedStock) }}</strong> ?
+      </p>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline-secondary" (click)="closeDeleteModal()" [disabled]="deleting">
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()" [disabled]="deleting">
+          {{ deleting ? 'Suppression...' : 'Supprimer' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

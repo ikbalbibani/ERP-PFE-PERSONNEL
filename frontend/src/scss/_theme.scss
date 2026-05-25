@@ -1,0 +1,481 @@
+// ============================================================================
+// THÈME GLOBAL - Styles pour Sales Front
+// ============================================================================
+
+@import './variables';
+
+:root,
+:root[data-theme='light'] {
+  --app-bg: #e9edf2;
+  --app-surface: #ffffff;
+  --app-surface-soft: #f3f4f6;
+  --app-border: #dfe4ea;
+  --app-text: #303841;
+  --app-muted: #87929d;
+  --app-primary: #45a9c9;
+  --app-primary-dark: #2f8fb3;
+  --app-primary-soft: rgba(69, 169, 201, 0.14);
+  --app-gradient: linear-gradient(135deg, #45a9c9 0%, #6dd7a7 100%);
+  --app-sidebar: #2f363d;
+  --app-sidebar-soft: #27313a;
+  --app-sidebar-strong: #263039;
+  --app-sidebar-footer: #262c32;
+  --app-sidebar-text: #d9dde1;
+  --app-sidebar-muted: #9ba4ad;
+  --app-shadow: 0 1px 2px rgba(31, 41, 55, 0.08);
+  --app-shadow-strong: 0 20px 60px rgba(31, 41, 55, 0.18);
+}
+
+:root[data-theme='dark'] {
+  --app-bg: #111827;
+  --app-surface: #1f2937;
+  --app-surface-soft: #273244;
+  --app-border: #374151;
+  --app-text: #f9fafb;
+  --app-muted: #a8b3c2;
+  --app-primary: #58c2cf;
+  --app-primary-dark: #7dd3df;
+  --app-primary-soft: rgba(88, 194, 207, 0.18);
+  --app-gradient: linear-gradient(135deg, #0f172a 0%, #164e63 100%);
+  --app-sidebar: #0f172a;
+  --app-sidebar-soft: #172033;
+  --app-sidebar-strong: #1e293b;
+  --app-sidebar-footer: #0b1120;
+  --app-sidebar-text: #e5e7eb;
+  --app-sidebar-muted: #94a3b8;
+  --app-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+  --app-shadow-strong: 0 24px 70px rgba(0, 0, 0, 0.38);
+}
+
+// ============================================================================
+// RÉINITIALISATION ET STYLES DE BASE
+// ============================================================================
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--app-bg);
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: var(--app-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================================================
+// TYPOGRAPHIE
+// ============================================================================
+
+h1, h2, h3, h4, h5, h6 {
+  margin: $spacing-md 0;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-lg;
+  color: var(--app-text);
+}
+
+h1 { font-size: 2.25rem; }    // 36px
+h2 { font-size: 1.875rem; }   // 30px
+h3 { font-size: 1.5rem; }     // 24px
+h4 { font-size: 1.25rem; }    // 20px
+h5 { font-size: 1.125rem; }   // 18px
+h6 { font-size: 1rem; }       // 16px
+
+p {
+  margin-bottom: $spacing-md;
+  color: var(--app-muted);
+  line-height: $line-height-lg;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+a {
+  color: var(--app-primary);
+  text-decoration: none;
+  transition: $transition-base;
+
+  &:hover {
+    color: var(--app-primary-dark);
+    text-decoration: underline;
+  }
+}
+
+// ============================================================================
+// BOUTONS
+// ============================================================================
+
+.btn {
+  font-weight: $font-weight-semibold;
+  transition: $transition-base;
+  border-radius: $border-radius-base;
+  padding: 0.5rem 1rem;
+
+  // Bouton primaire
+  &.btn-primary {
+    background-color: $primary;
+    border-color: var(--app-primary);
+    color: $white;
+
+    &:hover {
+      background-color: $primary-dark;
+      border-color: $primary-dark;
+    }
+
+    &:active,
+    &.active {
+      background-color: $primary-dark;
+      border-color: $primary-dark;
+    }
+
+    &:disabled {
+      background-color: $gray-400;
+      border-color: $gray-400;
+      opacity: 0.65;
+    }
+  }
+
+  // Bouton succès
+  &.btn-success {
+    background-color: $success;
+    border-color: $success;
+    color: $white;
+
+    &:hover {
+      background-color: darken($success, 10%);
+      border-color: darken($success, 10%);
+    }
+  }
+
+  // Bouton danger
+  &.btn-danger {
+    background-color: $danger;
+    border-color: $danger;
+    color: $white;
+
+    &:hover {
+      background-color: darken($danger, 10%);
+      border-color: darken($danger, 10%);
+    }
+  }
+
+  // Bouton secondaire/outline
+  &.btn-outline-primary {
+    color: $primary;
+    border-color: $primary;
+    background-color: transparent;
+
+    &:hover {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+
+  // Tailles
+  &.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: $font-size-sm;
+  }
+
+  &.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+  }
+}
+
+// ============================================================================
+// FORMULAIRES
+// ============================================================================
+
+.form-control,
+.form-select {
+  font-family: $font-family-base;
+  color: var(--app-text);
+  background-color: var(--app-surface);
+  border-color: var(--app-border);
+  border-radius: $border-radius-base;
+  transition: $transition-base;
+
+  &:focus {
+    border-color: var(--app-primary);
+    box-shadow: 0 0 0 0.2rem var(--app-primary-soft);
+  }
+
+  &:disabled {
+    background-color: var(--app-surface-soft);
+    cursor: not-allowed;
+  }
+}
+
+.form-label {
+  font-weight: $font-weight-semibold;
+  color: var(--app-text);
+  margin-bottom: $spacing-sm;
+}
+
+// ============================================================================
+// CARTES (CARDS)
+// ============================================================================
+
+.card {
+  border-radius: $border-radius-lg;
+  border-color: $gray-200;
+  box-shadow: $shadow-base;
+  transition: $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  .card-header {
+    background-color: $gray-50;
+    border-color: $gray-200;
+    font-weight: $font-weight-semibold;
+  }
+
+  .card-body {
+    padding: $spacing-lg;
+  }
+
+  .card-footer {
+    background-color: $gray-50;
+    border-color: $gray-200;
+  }
+}
+
+// ============================================================================
+// ALERTES
+// ============================================================================
+
+.alert {
+  border-radius: $border-radius-base;
+  border: none;
+
+  &.alert-success {
+    background-color: $success-light;
+    color: darken($success, 30%);
+    border-left: 4px solid $success;
+  }
+
+  &.alert-danger {
+    background-color: $danger-light;
+    color: darken($danger, 30%);
+    border-left: 4px solid $danger;
+  }
+
+  &.alert-warning {
+    background-color: $warning-light;
+    color: darken($warning, 50%);
+    border-left: 4px solid $warning;
+  }
+
+  &.alert-info {
+    background-color: $info-light;
+    color: darken($info, 50%);
+    border-left: 4px solid $info;
+  }
+}
+
+// ============================================================================
+// NAVBAR
+// ============================================================================
+
+.navbar {
+  background: linear-gradient(135deg, $primary 0%, darken($primary, 5%) 100%);
+  box-shadow: $shadow-md;
+
+  .navbar-brand {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-lg;
+    color: $white !important;
+  }
+
+  .nav-link {
+    color: rgba($white, 0.8) !important;
+    transition: $transition-base;
+
+    &:hover {
+      color: $white !important;
+    }
+
+    &.active {
+      color: $white !important;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+// ============================================================================
+// TABLEAUX
+// ============================================================================
+
+.table {
+  border-color: $gray-200;
+
+  thead {
+    background-color: $gray-100;
+    border-color: $gray-200;
+
+    th {
+      font-weight: $font-weight-semibold;
+      color: $gray-900;
+      border-color: $gray-200;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: $transition-base;
+
+      &:hover {
+        background-color: $gray-50;
+      }
+
+      td {
+        border-color: $gray-200;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// BADGES
+// ============================================================================
+
+.badge {
+  font-weight: $font-weight-semibold;
+  border-radius: $border-radius-base;
+  padding: $spacing-sm $spacing-md;
+
+  &.bg-success {
+    background-color: $success !important;
+  }
+
+  &.bg-danger {
+    background-color: $danger !important;
+  }
+
+  &.bg-warning {
+    background-color: $warning !important;
+  }
+
+  &.bg-info {
+    background-color: $info !important;
+  }
+
+  &.badge-pill {
+    border-radius: $border-radius-full;
+  }
+}
+
+// ============================================================================
+// MODALES
+// ============================================================================
+
+.modal-content {
+  border-radius: $border-radius-lg;
+  border: none;
+  box-shadow: $shadow-xl;
+
+  .modal-header {
+    border-color: $gray-200;
+    background-color: $gray-50;
+
+    .modal-title {
+      font-weight: $font-weight-bold;
+    }
+
+    .btn-close {
+      filter: invert(0.8);
+    }
+  }
+
+  .modal-body {
+    padding: $spacing-xl;
+  }
+
+  .modal-footer {
+    border-color: $gray-200;
+    background-color: $gray-50;
+  }
+}
+
+// ============================================================================
+// UTILITÉS
+// ============================================================================
+
+.container-fluid,
+.container {
+  padding-left: $spacing-md;
+  padding-right: $spacing-md;
+
+  @media (min-width: $breakpoint-md) {
+    padding-left: $spacing-lg;
+    padding-right: $spacing-lg;
+  }
+}
+
+// Classes d'espacement
+.mt-auto { margin-top: auto; }
+.mb-auto { margin-bottom: auto; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.text-muted { color: $gray-500; }
+.text-success { color: $success; }
+.text-danger { color: $danger; }
+.text-warning { color: $warning; }
+.text-info { color: $info; }
+
+// Fond
+.bg-light { background-color: $gray-50 !important; }
+.bg-dark { background-color: $gray-900 !important; }
+
+// ============================================================================
+// SCROLLBAR PERSONNALISÉE
+// ============================================================================
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $gray-400;
+  border-radius: $border-radius-base;
+
+  &:hover {
+    background: $gray-500;
+  }
+}
+
+// ============================================================================
+// RESPONSIVE
+// ============================================================================
+
+@media (max-width: $breakpoint-sm) {
+  h1 { font-size: 1.875rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+
+  .btn {
+    padding: 0.5rem 0.875rem;
+    font-size: $font-size-sm;
+  }
+}

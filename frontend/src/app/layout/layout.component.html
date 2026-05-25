@@ -1,0 +1,33 @@
+<div class="wrapper" [ngClass]="{ 'sidebar-show': sidebarOpen }">
+  <app-sidebar
+    [menuItems]="visibleMenuItems"
+    [themeMode]="themeMode"
+    [userEmail]="userEmail"
+    [userRoleLabel]="userRoleLabel"
+    (themeChange)="toggleTheme()"
+    (sidebarToggle)="toggleSidebar()"
+    (logoutClick)="logout()">
+  </app-sidebar>
+
+  <div class="page">
+    <app-navbar
+      [userEmail]="userEmail"
+      [userMenuOpen]="userMenuOpen"
+      (sidebarToggle)="toggleSidebar()"
+      (userMenuToggle)="toggleUserMenu()"
+      (logoutClick)="logout()">
+    </app-navbar>
+
+    <div class="breadcrumb-bar">
+      <a routerLink="/dashboard">Home</a>
+      <span>/</span>
+      <strong>Administration</strong>
+    </div>
+
+    <div class="page-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+</div>

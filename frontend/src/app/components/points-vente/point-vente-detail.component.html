@@ -1,0 +1,51 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>Detail point de vente</h1>
+      <p>Informations chargees depuis le backend Spring Boot.</p>
+    </div>
+
+    <a routerLink="/points-vente" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="loading()" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement...</span>
+  </div>
+
+  <div *ngIf="error()" class="notification notification--error">
+    <div class="notification__content">{{ error() }}</div>
+  </div>
+
+  <article *ngIf="pointVente() as item" class="data-panel">
+    <dl class="row mb-0">
+      <dt class="col-sm-3">Nom</dt>
+      <dd class="col-sm-9">{{ item.nom }}</dd>
+
+      <dt class="col-sm-3">Code</dt>
+      <dd class="col-sm-9">{{ item.code || '-' }}</dd>
+
+      <dt class="col-sm-3">Type</dt>
+      <dd class="col-sm-9">{{ item.type || '-' }}</dd>
+
+      <dt class="col-sm-3">Adresse</dt>
+      <dd class="col-sm-9">{{ item.adresse || '-' }}</dd>
+
+      <dt class="col-sm-3">Ville</dt>
+      <dd class="col-sm-9">{{ item.ville || '-' }}</dd>
+
+      <dt class="col-sm-3">Telephone</dt>
+      <dd class="col-sm-9">{{ item.telephone || '-' }}</dd>
+
+      <dt class="col-sm-3">Entreprise</dt>
+      <dd class="col-sm-9">{{ item.entrepriseNom || '-' }}</dd>
+
+      <dt class="col-sm-3">Statut</dt>
+      <dd class="col-sm-9">{{ item.actif === false ? 'Inactif' : 'Actif' }}</dd>
+    </dl>
+
+    <div class="form-actions">
+      <a [routerLink]="['/points-vente', item.id, 'edit']" class="btn btn-primary">Modifier</a>
+    </div>
+  </article>
+</section>

@@ -1,0 +1,104 @@
+<section class="dashboard">
+  <div *ngIf="loading" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement du tableau de bord...</span>
+  </div>
+
+  <div *ngIf="error" class="notification notification--error">
+    <div class="notification__content">{{ error }}</div>
+  </div>
+
+  <ng-container *ngIf="!loading && !error">
+    <header class="dashboard-header">
+      <h1>Tableau de bord</h1>
+      <span>{{ currentDate }}</span>
+    </header>
+
+    <div class="kpi-grid">
+      <article class="kpi-card" *ngFor="let kpi of kpis" [ngClass]="getThemeClass(kpi.color)">
+        <div>
+          <span class="kpi-label">{{ kpi.label }}</span>
+          <strong>{{ kpi.value }}</strong>
+          <small [class.down]="kpi.trend === 'down'">
+            {{ kpi.trend === 'up' ? '+' : '-' }} {{ kpi.change }} {{ kpi.hint }}
+          </small>
+        </div>
+        <div class="kpi-icon">{{ kpi.icon }}</div>
+      </article>
+    </div>
+
+    <div class="chart-grid">
+      <article class="panel">
+        <h2>Apercu des revenus</h2>
+        <div class="area-chart">
+          <div class="axis-y">
+            <span *ngFor="let label of revenueAxisLabels">{{ label }}</span>
+          </div>
+          <svg viewBox="0 0 960 300" preserveAspectRatio="none" aria-label="Courbe des revenus">
+            <path *ngIf="revenueAreaPath" class="line-area" [attr.d]="revenueAreaPath"></path>
+            <path *ngIf="revenueLinePath" class="line-main" [attr.d]="revenueLinePath"></path>
+          </svg>
+          <div class="axis-x">
+            <span *ngFor="let point of revenuePoints">{{ point.month }}</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Ventes par mois</h2>
+        <div class="bar-chart" aria-label="Histogramme des ventes par mois">
+          <div class="bar-scale">
+            <span *ngFor="let label of salesAxisLabels">{{ label }}</span>
+          </div>
+          <div class="bar-items">
+            <div class="bar-item" *ngFor="let item of salesBars">
+              <div class="bar-track">
+                <span [style.height.%]="item.height"></span>
+              </div>
+              <small>{{ item.label }}</small>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="bottom-grid">
+      <article class="panel">
+        <h2>Meilleures references</h2>
+        <div class="product-list">
+          <div class="product-row" *ngFor="let product of topProducts">
+            <div class="product-icon">P</div>
+            <div>
+              <strong>{{ product.name }}</strong>
+              <span>{{ product.sales }} ventes</span>
+            </div>
+            <div class="product-revenue">
+              <b>{{ formatCurrency(product.revenue) }}</b>
+              <small [class.down]="product.trend === 'down'">{{ product.trend === 'up' ? '+' : '-' }}</small>
+            </div>
+          </div>
+          <div class="empty-state" *ngIf="!topProducts.length">Aucun produit disponible.</div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Ventes recentes</h2>
+        <div class="sales-list">
+          <div class="sale-row" *ngFor="let transaction of latestTransactions">
+            <div>
+              <strong>{{ transaction.channel }}</strong>
+              <span>{{ transaction.id }}</span>
+            </div>
+            <div class="sale-amount">
+              <b>{{ formatCurrency(transaction.amount) }}</b>
+              <small class="status-pill" [ngClass]="getStatusClass(transaction.status)">
+                {{ transaction.status === 'success' ? 'Terminee' : transaction.status === 'pending' ? 'En attente' : 'A verifier' }}
+              </small>
+            </div>
+          </div>
+          <div class="empty-state" *ngIf="!latestTransactions.length">Aucune vente disponible.</div>
+        </div>
+      </article>
+    </div>
+  </ng-container>
+</section>

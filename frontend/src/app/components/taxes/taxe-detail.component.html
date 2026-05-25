@@ -1,0 +1,49 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>Detail taxe</h1>
+      <p>Lecture depuis GET /api/taxes/{{ taxe?.id }}</p>
+    </div>
+
+    <a routerLink="/taxes" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="loading" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement...</span>
+  </div>
+
+  <div *ngIf="error" class="notification notification--error">
+    <div class="notification__content">{{ error }}</div>
+  </div>
+
+  <article *ngIf="taxe && !loading" class="data-panel">
+    <dl class="row mb-0">
+      <dt class="col-sm-3">Nom</dt>
+      <dd class="col-sm-9">{{ taxe.nom }}</dd>
+
+      <dt class="col-sm-3">Taux</dt>
+      <dd class="col-sm-9">{{ taxe.taux }}</dd>
+
+      <dt class="col-sm-3">Actif</dt>
+      <dd class="col-sm-9">{{ taxe.actif === false ? 'Non' : 'Oui' }}</dd>
+
+      <dt class="col-sm-3">Entreprise</dt>
+      <dd class="col-sm-9">{{ taxe.entreprise?.nom || '-' }}</dd>
+    </dl>
+
+    <div class="form-actions">
+      <a
+        [routerLink]="['/taxes', taxe.id, 'edit']"
+        class="icon-btn icon-btn--edit"
+        title="Modifier"
+        aria-label="Modifier la taxe"
+      >
+        <svg aria-hidden="true" viewBox="0 0 16 16">
+          <path d="M15.5 1.5a1.5 1.5 0 0 1 0 2.1l-1 1-3-3 1-1a1.5 1.5 0 0 1 2.1 0l.9.9zM10.8 2.3l3 3L5.9 13.2 3 14l.8-2.9 7-8.8z"/>
+          <path d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5h6a.5.5 0 0 0 0-1h-6A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg>
+      </a>
+    </div>
+  </article>
+</section>

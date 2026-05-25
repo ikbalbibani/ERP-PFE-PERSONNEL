@@ -1,0 +1,99 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>{{ isEditMode ? 'Modifier le produit' : 'Nouveau produit' }}</h1>
+      <p>{{ isEditMode ? 'Mise a jour via PUT /api/produits/{id}' : 'Creation via POST /api/produits' }}</p>
+    </div>
+
+    <a routerLink="/produits" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="loading()" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement du produit...</span>
+  </div>
+
+  <div *ngIf="error()" class="notification notification--error">
+    <div class="notification__content">{{ error() }}</div>
+  </div>
+
+  <form *ngIf="!loading()" class="data-panel" [formGroup]="produitForm" (ngSubmit)="saveProduit()">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="nom">Nom</label>
+        <input id="nom" class="form-control" formControlName="nom">
+        <small *ngIf="produitForm.controls.nom.invalid && produitForm.controls.nom.touched" class="text-danger">Nom obligatoire.</small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="code">Code</label>
+        <input id="code" class="form-control" formControlName="code">
+        <small *ngIf="produitForm.controls.code.invalid && produitForm.controls.code.touched" class="text-danger">Code obligatoire.</small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="prix">Prix</label>
+        <input id="prix" type="number" step="0.01" class="form-control" formControlName="prix">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="barcode">Barcode</label>
+        <input id="barcode" class="form-control" formControlName="barcode">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="stockMinimum">Stock minimum</label>
+        <input id="stockMinimum" type="number" min="0" class="form-control" formControlName="stockMinimum">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="imageUrl">Image URL</label>
+        <input id="imageUrl" class="form-control" formControlName="imageUrl">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="entrepriseId">Entreprise</label>
+        <select id="entrepriseId" class="form-control" formControlName="entrepriseId">
+          <option [ngValue]="0">Choisir une entreprise</option>
+          <option *ngFor="let entreprise of entreprises()" [ngValue]="entreprise.id">
+            {{ entreprise.nom }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="categorieId">Categorie</label>
+        <select id="categorieId" class="form-control" formControlName="categorieId">
+          <option [ngValue]="0">Aucune categorie</option>
+          <option *ngFor="let categorie of filteredCategories" [ngValue]="categorie.id">
+            {{ categorie.nom }} - {{ categorie.entreprise?.typeEntreprise || '-' }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="taxeId">Taxe</label>
+        <select id="taxeId" class="form-control" formControlName="taxeId" (change)="onTaxeChange()">
+          <option [ngValue]="0">Aucune taxe</option>
+          <option *ngFor="let taxe of taxes()" [ngValue]="taxe.id">
+            {{ taxe.nom }} - {{ taxe.taux }}%
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-6 d-flex align-items-end">
+        <div class="form-check">
+          <input id="actif" type="checkbox" class="form-check-input" formControlName="actif">
+          <label class="form-check-label" for="actif">Produit actif</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <a routerLink="/produits" class="btn btn-outline-secondary">Annuler</a>
+      <button type="submit" class="btn btn-primary" [disabled]="produitForm.invalid || saving()">
+        {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+</section>

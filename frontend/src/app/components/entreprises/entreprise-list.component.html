@@ -1,0 +1,63 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>Entreprises</h1>
+      <p>Donnees chargees depuis le backend Spring Boot.</p>
+    </div>
+
+    <a routerLink="/entreprises/new" class="btn btn-primary">Ajouter</a>
+  </div>
+
+  <div *ngIf="loading()" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement des entreprises...</span>
+  </div>
+
+  <div *ngIf="error()" class="notification notification--error">
+    <div class="notification__content">{{ error() }}</div>
+  </div>
+
+  <article *ngIf="!loading() && !error()" class="data-panel">
+    <div *ngIf="entreprises().length === 0" class="empty-state">
+      Aucune entreprise trouvee.
+    </div>
+
+    <div *ngIf="entreprises().length > 0" class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Code</th>
+            <th>Type</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Ville</th>
+            <th>Statut</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entreprise of entreprises()">
+            <td>
+              <strong>{{ entreprise.nom }}</strong>
+              <small *ngIf="entreprise.adresse">{{ entreprise.adresse }}</small>
+            </td>
+            <td>{{ entreprise.code || '-' }}</td>
+            <td>{{ entreprise.typeEntreprise || '-' }}</td>
+            <td>{{ entreprise.email || '-' }}</td>
+            <td>{{ entreprise.telephone || '-' }}</td>
+            <td>{{ entreprise.ville || '-' }}</td>
+            <td>{{ entreprise.actif === false ? 'Inactive' : 'Active' }}</td>
+            <td class="text-end">
+              <a [routerLink]="['/entreprises', entreprise.id]" class="btn btn-sm btn-outline-secondary">Voir</a>
+              <a [routerLink]="['/entreprises', entreprise.id, 'edit']" class="btn btn-sm btn-outline-primary ms-2">Modifier</a>
+              <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="deleteEntreprise(entreprise)">
+                Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</section>

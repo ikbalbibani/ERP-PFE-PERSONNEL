@@ -1,0 +1,109 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>{{ isEditMode ? 'Modifier entreprise' : 'Ajouter entreprise' }}</h1>
+      <p>Formulaire connecte au backend Spring Boot.</p>
+    </div>
+
+    <a routerLink="/entreprises" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="loading" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement...</span>
+  </div>
+
+  <div *ngIf="error" class="notification notification--error">
+    <div class="notification__content">{{ error }}</div>
+  </div>
+
+  <form *ngIf="!loading" class="data-panel" (ngSubmit)="save()">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="nom">Nom</label>
+        <input id="nom" name="nom" class="form-control" [(ngModel)]="form.nom" required>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label" for="code">Code</label>
+        <input id="code" name="code" class="form-control" [(ngModel)]="form.code">
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label" for="typeEntreprise">Type</label>
+        <select id="typeEntreprise" name="typeEntreprise" class="form-control" [(ngModel)]="form.typeEntreprise" required>
+          <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="email">Email</label>
+        <input id="email" name="email" type="email" class="form-control" [(ngModel)]="form.email">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="telephone">Telephone</label>
+        <input id="telephone" name="telephone" class="form-control" [(ngModel)]="form.telephone">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="adresse">Adresse</label>
+        <input id="adresse" name="adresse" class="form-control" [(ngModel)]="form.adresse">
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label" for="ville">Ville</label>
+        <input id="ville" name="ville" class="form-control" [(ngModel)]="form.ville">
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label" for="pays">Pays</label>
+        <input id="pays" name="pays" class="form-control" [(ngModel)]="form.pays">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label" for="devise">Devise</label>
+        <input id="devise" name="devise" class="form-control" [(ngModel)]="form.devise">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label" for="langue">Langue</label>
+        <input id="langue" name="langue" class="form-control" [(ngModel)]="form.langue">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label" for="siteWeb">Site web</label>
+        <input id="siteWeb" name="siteWeb" class="form-control" [(ngModel)]="form.siteWeb">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="matriculeFiscal">Matricule fiscal</label>
+        <input id="matriculeFiscal" name="matriculeFiscal" class="form-control" [(ngModel)]="form.matriculeFiscal">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="registreCommerce">Registre commerce</label>
+        <input id="registreCommerce" name="registreCommerce" class="form-control" [(ngModel)]="form.registreCommerce">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label" for="description">Description</label>
+        <textarea id="description" name="description" class="form-control" rows="3" [(ngModel)]="form.description"></textarea>
+      </div>
+
+      <div class="col-12">
+        <label class="form-check">
+          <input class="form-check-input" type="checkbox" name="actif" [(ngModel)]="form.actif">
+          <span>Entreprise active</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a routerLink="/entreprises" class="btn btn-outline-secondary">Annuler</a>
+      <button class="btn btn-primary" type="submit" [disabled]="saving">
+        {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+</section>

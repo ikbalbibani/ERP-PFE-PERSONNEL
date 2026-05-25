@@ -1,0 +1,181 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>{{ isEditMode ? 'Modifier utilisateur' : 'Nouvel utilisateur' }}</h1>
+      <p>{{ isEditMode ? 'Modification via PUT /api/utilisateurs/{id}.' : 'Creation via POST /api/utilisateurs.' }}</p>
+    </div>
+
+    <a routerLink="/utilisateurs" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="error" class="notification notification--error">
+    <div class="notification__content">{{ error }}</div>
+  </div>
+
+  <div *ngIf="loading" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement...</span>
+  </div>
+
+  <form *ngIf="!loading" class="data-panel" autocomplete="off" (ngSubmit)="save()" #utilisateurForm="ngForm">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="nom">Nom</label>
+        <input id="nom" name="nom" class="form-control" [(ngModel)]="form.nom" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="prenom">Prenom</label>
+        <input id="prenom" name="prenom" class="form-control" [(ngModel)]="form.prenom">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="email">Email</label>
+        <input id="email" name="newUtilisateurEmail" type="email" class="form-control" autocomplete="new-email" [(ngModel)]="form.email" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="password">Mot de passe</label>
+        <input id="password" name="newUtilisateurPassword" type="password" class="form-control" autocomplete="new-password" [(ngModel)]="form.password" [required]="!isEditMode">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="confirmPassword">Confirmation mot de passe</label>
+        <input
+          id="confirmPassword"
+          name="newUtilisateurConfirmPassword"
+          type="password"
+          class="form-control"
+          autocomplete="new-password"
+          [(ngModel)]="confirmPassword"
+          [required]="!isEditMode || !!form.password"
+        >
+        <small *ngIf="form.password && confirmPassword && form.password !== confirmPassword" class="text-danger">
+          Les mots de passe ne correspondent pas.
+        </small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Roles</label>
+        <div class="dropdown w-100">
+          <button
+            type="button"
+            class="form-control text-start dropdown-toggle"
+            [ngClass]="{ show: roleDropdownOpen }"
+            [disabled]="loadingReferences || roles.length === 0"
+            (click)="toggleRoleDropdown()"
+          >
+            {{ selectedRoleLabel }}
+          </button>
+          <div class="dropdown-menu w-100 p-2" [ngClass]="{ show: roleDropdownOpen }" (click)="$event.stopPropagation()">
+            <label class="dropdown-item form-check m-0" *ngFor="let role of roles; trackBy: trackByRoleId">
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                name="role-{{ role.id }}"
+                [checked]="isRoleSelected(role.id)"
+                [disabled]="loadingReferences"
+                (change)="toggleRole(role.id, $any($event.target).checked)"
+              >
+              {{ role.nom }}
+            </label>
+          </div>
+        </div>
+        <small *ngIf="loadingReferences" class="text-muted">Chargement des roles...</small>
+        <small *ngIf="!loadingReferences && roles.length === 0" class="text-danger">Aucun role disponible.</small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="entrepriseId">Entreprise</label>
+        <select
+          id="entrepriseId"
+          name="entrepriseId"
+          class="form-control"
+          [(ngModel)]="form.entrepriseId"
+          [disabled]="loadingEntreprises || entreprises.length === 0"
+        >
+          <option [ngValue]="undefined">Aucune entreprise</option>
+          <option *ngFor="let entreprise of entreprises" [ngValue]="entreprise.id">
+            {{ entreprise.nom }}
+          </option>
+        </select>
+        <small *ngIf="loadingEntreprises" class="text-muted">Chargement des entreprises...</small>
+        <small *ngIf="!loadingEntreprises && entrepriseError" class="text-danger">{{ entrepriseError }}</small>
+        <small *ngIf="!loadingEntreprises && !entrepriseError && entreprises.length === 0" class="text-danger">Aucune entreprise disponible.</small>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label" for="cin">CIN</label>
+        <input id="cin" name="cin" class="form-control" [(ngModel)]="form.cin">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label" for="age">Age</label>
+        <input id="age" name="age" type="number" min="0" class="form-control" [(ngModel)]="form.age">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label" for="genre">Genre</label>
+        <select id="genre" name="genre" class="form-control" [(ngModel)]="form.genre">
+          <option value="">Non renseigne</option>
+          <option value="HOMME">Homme</option>
+          <option value="FEMME">Femme</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="telephone">Telephone</label>
+        <input id="telephone" name="telephone" class="form-control" [(ngModel)]="form.telephone">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="adresse">Adresse</label>
+        <input id="adresse" name="adresse" class="form-control" [(ngModel)]="form.adresse">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="ville">Ville</label>
+        <input id="ville" name="ville" class="form-control" [(ngModel)]="form.ville">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="pays">Pays</label>
+        <input id="pays" name="pays" class="form-control" [(ngModel)]="form.pays">
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label" for="imageFile">Image</label>
+        <input
+          id="imageFile"
+          name="imageFile"
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="onImageSelected($event)"
+        >
+        <div *ngIf="getImagePreviewUrl()" class="mt-3 d-flex align-items-center gap-3">
+          <img [src]="getImagePreviewUrl()" alt="Image utilisateur" class="rounded border" style="width: 96px; height: 96px; object-fit: cover;">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="removeImage()">Supprimer l image</button>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-check">
+          <input class="form-check-input" type="checkbox" name="actif" [(ngModel)]="form.actif">
+          Actif
+        </label>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <a routerLink="/utilisateurs" class="btn btn-outline-secondary">Annuler</a>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="utilisateurForm.invalid || saving || loadingReferences || roles.length === 0 || !form.roleIds?.length"
+      >
+        {{ saving ? 'Enregistrement...' : isEditMode ? 'Modifier' : 'Ajouter' }}
+      </button>
+    </div>
+  </form>
+</section>

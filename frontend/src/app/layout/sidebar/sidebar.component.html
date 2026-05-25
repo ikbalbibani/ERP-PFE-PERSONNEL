@@ -1,0 +1,88 @@
+<aside class="sidebar sidebar-fixed">
+  <div class="sidebar-brand">
+    <span class="brand-mark">S</span>
+    <span class="brand-name">Sales ERP</span>
+  </div>
+
+  <nav class="sidebar-nav" aria-label="Navigation principale">
+    <a routerLink="/dashboard" class="nav-link nav-main" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h6v6h-6v-6Z"></path>
+        </svg>
+      </span>
+      <span class="nav-text">Dashboard</span>
+    </a>
+
+    <div class="nav-item" *ngFor="let item of menuItems">
+      <a [routerLink]="item.route" class="nav-link" routerLinkActive="active">
+        <span class="nav-icon" [ngSwitch]="item.label">
+          <svg *ngSwitchCase="'Ventes'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6h15l-2 8H8L6 3H3"></path>
+            <path d="M9 20h.01M18 20h.01"></path>
+          </svg>
+          <svg *ngSwitchCase="'Produits'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"></path>
+            <path d="m4.5 8 7.5 4.2L19.5 8M12 21v-8.8"></path>
+          </svg>
+          <svg *ngSwitchCase="'Entreprises'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 21V5l9-2v18M13 8h7v13M7 9h2M7 13h2M7 17h2M16 12h2M16 16h2"></path>
+          </svg>
+          <svg *ngSwitchCase="'Utilisateurs'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path>
+            <path d="M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM21 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <svg *ngSwitchCase="'Categories'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 5h6v6H4V5Zm10 0h6v6h-6V5ZM4 15h6v4H4v-4Zm10 0h6v4h-6v-4Z"></path>
+          </svg>
+          <svg *ngSwitchCase="'Taxes'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m19 5-14 14M7.5 8.5h.01M16.5 15.5h.01"></path>
+            <path d="M9 8.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM18 15.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"></path>
+          </svg>
+          <svg *ngSwitchCase="'Points de vente'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 10h16l-1-5H5l-1 5ZM5 10v10h14V10M8 14h8M8 18h8"></path>
+          </svg>
+          <svg *ngSwitchCase="'Stock'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 9h18M5 9v11h14V9M7 4h10l2 5H5l2-5ZM9 13h6"></path>
+          </svg>
+          <svg *ngSwitchCase="'Paiements'" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18v12H3V6Zm0 4h18"></path>
+            <path d="M7 15h4"></path>
+          </svg>
+          <svg *ngSwitchDefault viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </span>
+        <span class="nav-text">{{ item.label }}</span>
+      </a>
+    </div>
+
+    <button type="button" class="nav-link theme-toggle" (click)="themeChange.emit()">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"></path>
+        </svg>
+      </span>
+      <span class="nav-text">{{ themeMode === 'dark' ? 'Theme clair' : 'Theme sombre' }}</span>
+    </button>
+  </nav>
+
+  <div class="sidebar-user">
+    <div class="user-summary">
+      <span class="user-avatar">{{ userInitials }}</span>
+      <div>
+        <strong>{{ userName }}</strong>
+        <span>{{ userRoleLabel }}</span>
+      </div>
+    </div>
+    <button type="button" class="logout-link" (click)="logoutClick.emit()">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10 17l5-5-5-5M15 12H3M21 3v18"></path>
+        </svg>
+      </span>
+      <span>Deconnexion</span>
+    </button>
+  </div>
+</aside>

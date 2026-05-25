@@ -1,0 +1,126 @@
+// ============================================================================
+// VARIABLES DE COULEURS - Thème Sales Front
+// ============================================================================
+
+// Couleurs primaires
+$primary: #0d6efd;
+$primary-light: #0dcaf0;
+$primary-dark: #0b5ed7;
+
+// Couleurs secondaires
+$secondary: #6c757d;
+$secondary-light: #adb5bd;
+$secondary-dark: #495057;
+
+// Couleurs fonctionnelles
+$success: #198754;
+$success-light: #d1e7dd;
+$danger: #dc3545;
+$danger-light: #f8d7da;
+$warning: #ffc107;
+$warning-light: #fff3cd;
+$info: #0dcaf0;
+$info-light: #cfe2ff;
+
+// Couleurs spécifiques au thème Sales
+$sales-primary: #0d6efd;      // Bleu
+$sales-accent: #198754;        // Vert (ventes positives)
+$sales-alert: #dc3545;         // Rouge (alertes/erreurs)
+$sales-highlight: #ffc107;     // Orange (attention)
+
+// Couleurs neutres
+$white: #ffffff;
+$black: #000000;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Dégradés
+$gradient-primary: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+$gradient-success: linear-gradient(135deg, #198754 0%, #20c997 100%);
+$gradient-danger: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+
+// ============================================================================
+// VARIABLES DE TYPOGRAPHIE
+// ============================================================================
+
+// Polices
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+// Tailles de police
+$font-size-base: 1rem;           // 16px
+$font-size-lg: 1.25rem;          // 20px
+$font-size-sm: 0.875rem;         // 14px
+$font-size-xs: 0.75rem;          // 12px
+
+// Poids de police
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// Hauteur de ligne
+$line-height-base: 1.5;
+$line-height-lg: 1.75;
+$line-height-sm: 1.25;
+
+// ============================================================================
+// VARIABLES D'ESPACEMENT
+// ============================================================================
+
+$spacing-xs: 0.25rem;  // 4px
+$spacing-sm: 0.5rem;   // 8px
+$spacing-md: 1rem;     // 16px
+$spacing-lg: 1.5rem;   // 24px
+$spacing-xl: 2rem;     // 32px
+$spacing-2xl: 3rem;    // 48px
+$spacing-3xl: 4rem;    // 64px
+
+// ============================================================================
+// VARIABLES DE BORDER RADIUS
+// ============================================================================
+
+$border-radius-none: 0;
+$border-radius-sm: 0.25rem;    // 4px
+$border-radius-base: 0.5rem;   // 8px
+$border-radius-lg: 1rem;       // 16px
+$border-radius-xl: 1.5rem;     // 24px
+$border-radius-full: 9999px;
+
+// ============================================================================
+// VARIABLES D'OMBRES
+// ============================================================================
+
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// ============================================================================
+// VARIABLES DE TRANSITION
+// ============================================================================
+
+$transition-base: all 0.3s ease-in-out;
+$transition-fade: opacity 0.15s linear;
+$transition-collapse: height 0.35s ease;
+
+// ============================================================================
+// VARIABLES DE BREAKPOINTS
+// ============================================================================
+
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1400px;

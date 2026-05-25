@@ -1,0 +1,112 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>Points de vente</h1>
+      <p>Donnees chargees depuis le backend Spring Boot.</p>
+    </div>
+
+    <a routerLink="/points-vente/new" class="btn btn-primary">Ajouter</a>
+  </div>
+
+  <div *ngIf="loading()" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement des points de vente...</span>
+  </div>
+
+  <div *ngIf="error()" class="notification notification--error">
+    <div class="notification__content">{{ error() }}</div>
+  </div>
+
+  <div *ngIf="!loading() && !error()" class="filter-panel filter-panel--simple">
+    <div class="filter-field">
+      <label for="searchTerm">Recherche</label>
+      <input
+        id="searchTerm"
+        name="searchTerm"
+        class="form-control"
+        placeholder="Nom, code, type, ville, entreprise..."
+        [(ngModel)]="searchTerm"
+      >
+    </div>
+
+    <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">Reinitialiser</button>
+  </div>
+
+  <article *ngIf="!loading() && !error()" class="data-panel">
+    <div *ngIf="pointsVente().length === 0" class="empty-state">
+      Aucun point de vente trouve.
+    </div>
+
+    <div *ngIf="pointsVente().length > 0 && filteredPointsVente.length === 0" class="empty-state">
+      Aucun point de vente ne correspond a la recherche.
+    </div>
+
+    <div *ngIf="filteredPointsVente.length > 0" class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Code</th>
+            <th>Type</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Telephone</th>
+            <th>Entreprise</th>
+            <th>Statut</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pointVente of filteredPointsVente">
+            <td><strong>{{ pointVente.nom }}</strong></td>
+            <td>{{ pointVente.code || '-' }}</td>
+            <td>{{ pointVente.type || '-' }}</td>
+            <td>{{ pointVente.adresse || '-' }}</td>
+            <td>{{ pointVente.ville || '-' }}</td>
+            <td>{{ pointVente.telephone || '-' }}</td>
+            <td>{{ pointVente.entrepriseNom || '-' }}</td>
+            <td>{{ pointVente.actif === false ? 'Inactif' : 'Actif' }}</td>
+            <td class="text-end">
+              <div class="icon-actions">
+                <a
+                  [routerLink]="['/points-vente', pointVente.id]"
+                  class="icon-btn icon-btn--view"
+                  title="Voir"
+                  aria-label="Voir le point de vente"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 16 16">
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.2 8A13.1 13.1 0 0 1 3.4 5.4C4.7 4.2 6.2 3.5 8 3.5s3.3.7 4.6 1.9A13.1 13.1 0 0 1 14.8 8a13.1 13.1 0 0 1-2.2 2.6C11.3 11.8 9.8 12.5 8 12.5s-3.3-.7-4.6-1.9A13.1 13.1 0 0 1 1.2 8z"/>
+                    <path d="M8 5.5A2.5 2.5 0 1 0 8 10.5 2.5 2.5 0 0 0 8 5.5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                  </svg>
+                </a>
+                <a
+                  [routerLink]="['/points-vente', pointVente.id, 'edit']"
+                  class="icon-btn icon-btn--edit"
+                  title="Modifier"
+                  aria-label="Modifier le point de vente"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 16 16">
+                    <path d="M15.5 1.5a1.5 1.5 0 0 1 0 2.1l-1 1-3-3 1-1a1.5 1.5 0 0 1 2.1 0l.9.9zM10.8 2.3l3 3L5.9 13.2 3 14l.8-2.9 7-8.8z"/>
+                    <path d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5h6a.5.5 0 0 0 0-1h-6A1.5 1.5 0 0 0 1 2.5v11z"/>
+                  </svg>
+                </a>
+                <button
+                  type="button"
+                  class="icon-btn icon-btn--delete"
+                  title="Supprimer"
+                  aria-label="Supprimer le point de vente"
+                  (click)="deletePointVente(pointVente)"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0v-6z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1h2.5a1 1 0 0 1 1 1zM4.1 4l.9 9.1a1 1 0 0 0 1 .9h4a1 1 0 0 0 1-.9L11.9 4H4.1zM2.5 3h11H2.5z"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</section>

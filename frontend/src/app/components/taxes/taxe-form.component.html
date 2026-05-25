@@ -1,0 +1,58 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>{{ isEditMode ? 'Modifier la taxe' : 'Nouvelle taxe' }}</h1>
+      <p>{{ isEditMode ? 'Mise a jour via PUT /api/taxes/{id}' : 'Creation via POST /api/taxes' }}</p>
+    </div>
+
+    <a routerLink="/taxes" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="loading" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement de la taxe...</span>
+  </div>
+
+  <div *ngIf="error" class="notification notification--error">
+    <div class="notification__content">{{ error }}</div>
+  </div>
+
+  <form *ngIf="!loading" class="data-panel" (ngSubmit)="save()" #taxeForm="ngForm">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="nom">Nom</label>
+        <input id="nom" name="nom" class="form-control" [(ngModel)]="form.nom" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="taux">Taux</label>
+        <input id="taux" name="taux" type="number" class="form-control" [(ngModel)]="form.taux" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="entrepriseNom">Entreprise</label>
+        <input
+          id="entrepriseNom"
+          name="entrepriseNom"
+          class="form-control"
+          [value]="entrepriseNom || 'Entreprise courante'"
+          disabled
+        >
+      </div>
+
+      <div class="col-md-6 d-flex align-items-end">
+        <div class="form-check">
+          <input id="actif" name="actif" type="checkbox" class="form-check-input" [(ngModel)]="form.actif">
+          <label class="form-check-label" for="actif">Taxe active</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <a routerLink="/taxes" class="btn btn-outline-secondary">Annuler</a>
+      <button type="submit" class="btn btn-primary" [disabled]="taxeForm.invalid || saving">
+        {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+</section>

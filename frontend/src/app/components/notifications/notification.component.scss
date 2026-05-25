@@ -1,0 +1,127 @@
+.notification-stack {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2000;
+  display: grid;
+  gap: 0.75rem;
+  width: min(360px, calc(100vw - 2rem));
+}
+
+.toast-notification {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  color: #243041;
+  background: #eef6ff;
+  border: 1px solid #b9d7ff;
+  border-left: 5px solid #2f80ed;
+  border-radius: 6px;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.18);
+}
+
+.toast-notification--success {
+  background: #ecfdf3;
+  border-color: #b8e7cc;
+  border-left-color: #1f9d61;
+}
+
+.toast-notification--error {
+  background: #fff1f1;
+  border-color: #f2b8b8;
+  border-left-color: #d64545;
+}
+
+.toast-notification--delete {
+  background: #fff1f1;
+  border-color: #f2b8b8;
+  border-left-color: #d64545;
+}
+
+.toast-notification--warning {
+  background: #fff8e8;
+  border-color: #f1d39a;
+  border-left-color: #d99018;
+}
+
+.toast-notification--info {
+  background: #eef6ff;
+  border-color: #b9d7ff;
+  border-left-color: #2f80ed;
+}
+
+.toast-notification__icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  color: #fff;
+  background: #2f80ed;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.toast-notification--success .toast-notification__icon {
+  background: #1f9d61;
+}
+
+.toast-notification--error .toast-notification__icon {
+  background: #d64545;
+}
+
+.toast-notification--delete .toast-notification__icon {
+  background: #d64545;
+}
+
+.toast-notification--warning .toast-notification__icon {
+  background: #d99018;
+}
+
+.toast-notification__content {
+  display: grid;
+  gap: 0.15rem;
+  color: #243041;
+  font-size: 0.95rem;
+  line-height: 1.35;
+
+  strong {
+    color: #172033;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  span {
+    color: #4e5f73;
+  }
+}
+
+.toast-notification__close {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  color: #6b7787;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.toast-notification__close:hover {
+  background: #eef2f6;
+}
+
+@media (max-width: 700px) {
+  .notification-stack {
+    top: 0.75rem;
+    right: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "sales-front",
+  "version": "0.0.0",
+  "engines": {
+    "node": ">=18.10.0"
+  },
+  "scripts": {
+    "ng": "tools\\ng-node18.cmd",
+    "start": "tools\\ng-node18.cmd serve",
+    "build": "tools\\ng-node18.cmd build",
+    "watch": "tools\\ng-node18.cmd build --watch --configuration development",
+    "test": "tools\\ng-node18.cmd test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^16.2.12",
+    "@angular/common": "^16.2.12",
+    "@angular/compiler": "^16.2.12",
+    "@angular/core": "^16.2.12",
+    "@angular/forms": "^16.2.12",
+    "@angular/platform-browser": "^16.2.12",
+    "@angular/platform-browser-dynamic": "^16.2.12",
+    "@angular/router": "^16.2.12",
+    "bootstrap": "^5.3.8",
+    "rxjs": "~7.5.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.13.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.2.16",
+    "@angular/cli": "~16.2.16",
+    "@angular/compiler-cli": "^16.2.12",
+    "@types/jasmine": "~4.0.0",
+    "jasmine-core": "~4.2.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "typescript": "~5.1.6"
+  }
+}

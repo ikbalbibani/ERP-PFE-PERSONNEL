@@ -1,0 +1,112 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>{{ isEditMode ? 'Modifier point de vente' : 'Ajouter point de vente' }}</h1>
+      <p>Formulaire connecte au backend Spring Boot.</p>
+    </div>
+
+    <a routerLink="/points-vente" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="loading" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement...</span>
+  </div>
+
+  <div *ngIf="error" class="notification notification--error">
+    <div class="notification__content">{{ error }}</div>
+  </div>
+
+  <form *ngIf="!loading" class="data-panel" (ngSubmit)="save()">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="nom">Nom</label>
+        <input id="nom" name="nom" class="form-control" [(ngModel)]="form.nom" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="code">Code</label>
+        <input id="code" name="code" class="form-control" [(ngModel)]="form.code" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="entrepriseId">Entreprise</label>
+        <select
+          id="entrepriseId"
+          name="entrepriseId"
+          class="form-control"
+          [(ngModel)]="form.entrepriseId"
+          [disabled]="loadingEntreprises || entreprises.length <= 1"
+          required
+        >
+          <option [ngValue]="undefined">Selectionner une entreprise</option>
+          <option *ngFor="let entreprise of entreprises" [ngValue]="entreprise.id">
+            {{ entreprise.nom }}
+          </option>
+        </select>
+        <small *ngIf="loadingEntreprises" class="text-muted">Chargement des entreprises...</small>
+        <small *ngIf="!loadingEntreprises && entreprises.length === 0" class="text-muted">Aucune entreprise disponible.</small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="type">Type</label>
+        <select
+          id="type"
+          name="type"
+          class="form-control"
+          [(ngModel)]="form.type"
+        >
+          <option value="">Aucun type</option>
+          <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-5">
+        <label class="form-label" for="adresse">Adresse</label>
+        <input id="adresse" name="adresse" class="form-control" [(ngModel)]="form.adresse">
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label" for="ville">Ville</label>
+        <input id="ville" name="ville" class="form-control" [(ngModel)]="form.ville">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label" for="telephone">Telephone</label>
+        <input id="telephone" name="telephone" class="form-control" [(ngModel)]="form.telephone">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="responsableId">Responsable</label>
+        <select
+          id="responsableId"
+          name="responsableId"
+          class="form-control"
+          [(ngModel)]="form.responsableId"
+          [disabled]="loadingUtilisateurs || utilisateurs.length === 0"
+        >
+          <option [ngValue]="undefined">Aucun responsable</option>
+          <option *ngFor="let utilisateur of utilisateurs" [ngValue]="utilisateur.id">
+            {{ getUtilisateurLabel(utilisateur) }}
+          </option>
+        </select>
+        <small *ngIf="loadingUtilisateurs" class="text-muted">Chargement des utilisateurs...</small>
+        <small *ngIf="!loadingUtilisateurs && utilisateurs.length === 0" class="text-muted">Aucun utilisateur disponible.</small>
+      </div>
+
+      <div class="col-md-2 d-flex align-items-end">
+        <label class="form-check">
+          <input class="form-check-input" type="checkbox" name="actif" [(ngModel)]="form.actif">
+          Actif
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a routerLink="/points-vente" class="btn btn-outline-secondary btn-sm">Annuler</a>
+      <button class="btn btn-primary btn-sm" type="submit" [disabled]="saving || loadingEntreprises || loadingUtilisateurs">
+        {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+</section>

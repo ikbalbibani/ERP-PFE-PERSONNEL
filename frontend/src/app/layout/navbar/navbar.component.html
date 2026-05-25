@@ -1,0 +1,26 @@
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-button" type="button" (click)="sidebarToggle.emit()" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <a routerLink="/dashboard">Dashboard</a>
+    <a routerLink="/produits">Produits</a>
+    <a routerLink="/ventes">Ventes</a>
+  </div>
+
+  <div class="topbar-right">
+    <button class="top-icon info" type="button">?</button>
+
+    <div class="user-menu" (click)="userMenuToggle.emit()">
+      <img src="https://ui-avatars.com/api/?name=User&background=dde3ea&color=2f3a45" alt="User">
+      <div class="dropdown-menu dropdown-menu-end" [ngClass]="{ show: userMenuOpen }">
+        <span class="dropdown-header">{{ userEmail }}</span>
+        <a routerLink="/utilisateurs" class="dropdown-item">Utilisateurs</a>
+        <div class="dropdown-divider"></div>
+        <button type="button" class="dropdown-item text-danger" (click)="logoutClick.emit()">Se deconnecter</button>
+      </div>
+    </div>
+  </div>
+</header>

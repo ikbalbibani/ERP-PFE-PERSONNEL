@@ -1,0 +1,41 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>Detail produit</h1>
+      <!-- <p>Lecture depuis GET /api/produits/{{ produit()?.id }}</p> -->
+    </div>
+
+    <a routerLink="/produits" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="loading()" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement...</span>
+  </div>
+
+  <div *ngIf="error()" class="notification notification--error">
+    <div class="notification__content">{{ error() }}</div>
+  </div>
+
+  <article *ngIf="produit() as produitDetail" class="data-panel">
+    <dl class="row mb-0">
+      <dt class="col-sm-3">Nom</dt>
+      <dd class="col-sm-9">{{ produitDetail.nom || '-' }}</dd>
+
+      <dt class="col-sm-3">Code</dt>
+      <dd class="col-sm-9">{{ produitDetail.code || '-' }}</dd>
+
+      <dt class="col-sm-3">Prix</dt>
+      <dd class="col-sm-9">{{ produitDetail.prix || 0 | number:'1.2-2' }}</dd>
+
+      <dt class="col-sm-3">Quantite</dt>
+      <dd class="col-sm-9">{{ produitDetail.quantite || 0 }}</dd>
+
+      <dt class="col-sm-3">Categorie</dt>
+      <dd class="col-sm-9">{{ produitDetail.categorieNom || '-' }}</dd>
+
+      <dt class="col-sm-3">Taxe</dt>
+      <dd class="col-sm-9">{{ produitDetail.taxeNom || '-' }}</dd>
+    </dl>
+  </article>
+</section>

@@ -1,0 +1,55 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>{{ isEditMode ? 'Modifier categorie' : 'Nouvelle categorie' }}</h1>
+      <p>{{ isEditMode ? 'Modification via PUT /api/categories/{id}.' : 'Creation via POST /api/categories.' }}</p>
+    </div>
+
+    <a routerLink="/categories" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="error" class="notification notification--error">
+    <div class="notification__content">{{ error }}</div>
+  </div>
+
+  <div *ngIf="loading" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement...</span>
+  </div>
+
+  <form *ngIf="!loading" class="data-panel" (ngSubmit)="save()" #categorieForm="ngForm">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="nom">Nom</label>
+        <input id="nom" name="nom" class="form-control" [(ngModel)]="form.nom" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="entrepriseId">Entreprise</label>
+        <select id="entrepriseId" name="entrepriseId" class="form-control" [(ngModel)]="form.entrepriseId" required>
+          <option [ngValue]="undefined">Selectionner une entreprise</option>
+          <option *ngFor="let entreprise of entreprises" [ngValue]="entreprise.id">
+            {{ entreprise.nom }} - {{ entreprise.typeEntreprise || '-' }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="parentId">Categorie parente</label>
+        <select id="parentId" name="parentId" class="form-control" [(ngModel)]="form.parentId">
+          <option [ngValue]="undefined">Aucune</option>
+          <option *ngFor="let categorie of categories" [ngValue]="categorie.id">
+            {{ categorie.nom }} - {{ getCategorieType(categorie) }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <a routerLink="/categories" class="btn btn-outline-secondary">Annuler</a>
+      <button type="submit" class="btn btn-primary" [disabled]="categorieForm.invalid || saving">
+        {{ saving ? 'Enregistrement...' : isEditMode ? 'Modifier' : 'Ajouter' }}
+      </button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,77 @@
+<section class="crud-page">
+  <div class="page-head">
+    <div>
+      <h1>{{ isEditMode ? 'Modifier le stock' : 'Nouveau stock' }}</h1>
+      <p>{{ isEditMode ? 'Mise a jour via PUT /api/stocks/{id}' : 'Creation via POST /api/stocks' }}</p>
+    </div>
+
+    <a routerLink="/stocks" class="btn btn-outline-secondary">Retour</a>
+  </div>
+
+  <div *ngIf="loading()" class="state-panel">
+    <div class="spinner spinner--sm"></div>
+    <span>Chargement du stock...</span>
+  </div>
+
+  <div *ngIf="error()" class="notification notification--error">
+    <div class="notification__content">{{ error() }}</div>
+  </div>
+
+  <form *ngIf="!loading()" class="data-panel" [formGroup]="stockForm" (ngSubmit)="saveStock()">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="entrepriseId">Entreprise</label>
+        <select id="entrepriseId" class="form-control" formControlName="entrepriseId" (change)="onEntrepriseChange()">
+          <option [ngValue]="0">Choisir une entreprise</option>
+          <option *ngFor="let entreprise of entreprises()" [ngValue]="entreprise.id">
+            {{ entreprise.nom }}
+          </option>
+        </select>
+        <small *ngIf="stockForm.controls.entrepriseId.invalid && stockForm.controls.entrepriseId.touched" class="text-danger">
+          Entreprise obligatoire.
+        </small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="produitId">Produit</label>
+        <select id="produitId" class="form-control" formControlName="produitId">
+          <option [ngValue]="0">Choisir un produit</option>
+          <option *ngFor="let produit of filteredProduits" [ngValue]="produit.id">
+            {{ produit.nom }} - {{ produit.code }}
+          </option>
+        </select>
+        <small *ngIf="stockForm.controls.produitId.invalid && stockForm.controls.produitId.touched" class="text-danger">
+          Produit obligatoire.
+        </small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="pointVenteId">Point de vente</label>
+        <select id="pointVenteId" class="form-control" formControlName="pointVenteId">
+          <option [ngValue]="0">Choisir un point de vente</option>
+          <option *ngFor="let point of filteredPointsVente" [ngValue]="point.id">
+            {{ point.nom }}
+          </option>
+        </select>
+        <small *ngIf="stockForm.controls.pointVenteId.invalid && stockForm.controls.pointVenteId.touched" class="text-danger">
+          Point de vente obligatoire.
+        </small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="quantite">Quantite</label>
+        <input id="quantite" type="number" min="0" class="form-control" formControlName="quantite">
+        <small *ngIf="stockForm.controls.quantite.invalid && stockForm.controls.quantite.touched" class="text-danger">
+          Quantite obligatoire et positive.
+        </small>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <a routerLink="/stocks" class="btn btn-outline-secondary">Annuler</a>
+      <button type="submit" class="btn btn-primary" [disabled]="stockForm.invalid || saving()">
+        {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+</section>
