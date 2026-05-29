@@ -5,11 +5,28 @@
       <span></span>
       <span></span>
     </button>
-    <div class="search-box">
+    <div class="search-box" [class.search-box--open]="showSearchPanel">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"></path>
       </svg>
-      <input type="search" placeholder="Search products, SKUs, or categories...">
+      <input
+        type="search"
+        placeholder="Search products, SKUs, or categories..."
+        [(ngModel)]="searchQuery"
+        (focus)="openSearch()"
+        (blur)="closeSearch()"
+        (keydown.enter)="runSearch()">
+
+      <div class="search-results" *ngIf="showSearchPanel">
+        <button
+          type="button"
+          class="search-result"
+          *ngFor="let result of filteredSearchResults"
+          (mousedown)="goToResult(result.route)">
+          <strong>{{ result.label }}</strong>
+          <span>{{ result.description }}</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -19,7 +36,7 @@
         <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7M13.73 21a2 2 0 0 1-3.46 0"></path>
       </svg>
     </button>
-    <button class="top-icon" type="button" aria-label="Theme">
+    <button class="top-icon" type="button" aria-label="Theme" (click)="themeToggle.emit()">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 3a6 6 0 0 0 9 7.5A9 9 0 1 1 12 3Z"></path>
       </svg>
@@ -35,7 +52,7 @@
         <span class="dropdown-header">{{ userEmail }}</span>
         <a routerLink="/utilisateurs" class="dropdown-item">Utilisateurs</a>
         <div class="dropdown-divider"></div>
-        <button type="button" class="dropdown-item text-danger" (click)="logoutClick.emit()">Se deconnecter</button>
+        <button type="button" class="dropdown-item text-danger" (click)="$event.stopPropagation(); logoutClick.emit()">Se deconnecter</button>
       </div>
     </div>
   </div>

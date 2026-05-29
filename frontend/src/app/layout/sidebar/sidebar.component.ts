@@ -18,6 +18,7 @@ export class SidebarComponent {
   @Input() userRoleLabel = 'Utilisateur';
   @Output() themeChange = new EventEmitter<void>();
   @Output() sidebarToggle = new EventEmitter<void>();
+  @Output() navClick = new EventEmitter<void>();
   @Output() logoutClick = new EventEmitter<void>();
 
   get userName(): string {

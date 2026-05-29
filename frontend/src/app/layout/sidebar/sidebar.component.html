@@ -8,7 +8,7 @@
   </div>
 
   <nav class="sidebar-nav" aria-label="Navigation principale">
-    <a routerLink="/dashboard" class="nav-link nav-main" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <a routerLink="/dashboard" class="nav-link nav-main" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="navClick.emit()">
       <span class="nav-icon">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h6v6h-6v-6Z"></path>
@@ -18,7 +18,7 @@
     </a>
 
     <div class="nav-item" *ngFor="let item of menuItems">
-      <a [routerLink]="item.route" class="nav-link" routerLinkActive="active">
+      <a [routerLink]="item.route" class="nav-link" routerLinkActive="active" (click)="navClick.emit()">
         <span class="nav-icon" [ngSwitch]="item.label">
           <svg *ngSwitchCase="'Ventes'" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6 6h15l-2 8H8L6 3H3"></path>
@@ -74,7 +74,7 @@
   </nav>
 
   <div class="sidebar-user">
-    <button type="button" class="register-button" routerLink="/ventes">
+    <button type="button" class="register-button" routerLink="/ventes" (click)="navClick.emit()">
       <span>+</span>
       Open Register
     </button>

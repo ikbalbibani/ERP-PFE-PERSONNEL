@@ -110,6 +110,12 @@ export class LayoutComponent implements OnInit {
     this.userMenuOpen = !this.userMenuOpen;
   }
 
+  closeSidebarOnSmallScreen(): void {
+    if (window.innerWidth < 992) {
+      this.sidebarOpen = false;
+    }
+  }
+
   toggleTheme(): void {
     this.themeMode = this.themeMode === 'light' ? 'dark' : 'light';
     localStorage.setItem('themeMode', this.themeMode);
