@@ -1,6 +1,9 @@
 .crud-page {
   min-height: 100%;
   padding: 1.25rem;
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
   background:
     radial-gradient(circle at 0 0, rgba(31, 168, 74, 0.06), transparent 28rem),
     var(--app-bg);
@@ -19,7 +22,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.9rem;
+  margin-bottom: 0;
   padding: 1rem 1.15rem;
 
   h1 {
@@ -46,6 +49,7 @@
 .data-panel {
   overflow: hidden;
   padding: 1rem;
+  width: 100%;
 
   h2 {
     display: flex;
@@ -71,6 +75,11 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--app-border);
+  border-radius: 0.95rem;
+  background: var(--app-surface);
+  box-shadow: var(--app-shadow);
   color: var(--app-muted);
 }
 
