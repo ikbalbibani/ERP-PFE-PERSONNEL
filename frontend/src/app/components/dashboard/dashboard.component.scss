@@ -1,6 +1,6 @@
 .dashboard {
   min-height: 100%;
-  padding: 1.25rem;
+  padding: 0.85rem;
   background:
     radial-gradient(circle at 0 0, rgba(31, 168, 74, 0.06), transparent 28rem),
     var(--app-bg);
@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1rem 1.25rem;
+  padding: 0.65rem 0.8rem;
   border: 1px solid var(--app-border);
   border-radius: 1rem;
   background: var(--app-surface);
@@ -22,9 +22,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.9rem;
-  padding: 1rem 1.15rem;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+  padding: 0.75rem 0.9rem;
   border: 1px solid var(--app-border);
   border-radius: 0.95rem;
   background: var(--app-surface);
@@ -34,13 +34,13 @@
     margin: 0;
     color: var(--app-text);
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.32rem;
+    font-size: 1.12rem;
     font-weight: 850;
   }
 
   span {
     color: var(--app-muted);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -48,12 +48,12 @@
 .chart-grid,
 .bottom-grid {
   display: grid;
-  gap: 1.05rem;
+  gap: 0.7rem;
 }
 
 .kpi-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-bottom: 1.05rem;
+  margin-bottom: 0.7rem;
 }
 
 .kpi-card,
@@ -65,12 +65,12 @@
 }
 
 .kpi-card {
-  min-height: 110px;
+  min-height: 92px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 0.7rem;
+  padding: 0.78rem;
   overflow: hidden;
   position: relative;
 
@@ -81,16 +81,16 @@
   }
 
   strong {
-    margin: 0.45rem 0 0.55rem;
+    margin: 0.3rem 0 0.38rem;
     color: var(--app-text);
-    font-size: 1.32rem;
+    font-size: 1.12rem;
     font-weight: 850;
     line-height: 1;
   }
 
   small {
     color: var(--app-primary);
-    font-size: 0.86rem;
+    font-size: 0.76rem;
     font-weight: 700;
 
     &.down {
@@ -101,19 +101,19 @@
 
 .kpi-label {
   color: var(--app-muted);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
 }
 
 .kpi-icon {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
-  flex: 0 0 42px;
+  flex: 0 0 36px;
   border-radius: 0.75rem;
   background: #e8f5e9;
   color: var(--app-primary);
-  font-size: 1.35rem;
+  font-size: 1.1rem;
   font-weight: 700;
 
   &::first-letter {
@@ -147,26 +147,26 @@
 }
 
 .chart-grid {
-  margin-bottom: 1.05rem;
+  margin-bottom: 0.7rem;
 }
 
 .panel {
-  min-height: 320px;
-  padding: 1rem;
+  min-height: 260px;
+  padding: 0.78rem;
 
   h2 {
-    margin: 0 0 1.5rem;
+    margin: 0 0 1rem;
     color: var(--app-text);
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1rem;
+    font-size: 0.88rem;
     font-weight: 850;
   }
 }
 
 .area-chart {
   position: relative;
-  height: 300px;
-  padding: 0 0 1.55rem 4rem;
+  height: 230px;
+  padding: 0 0 1.2rem 3.2rem;
 }
 
 .area-chart svg {
@@ -192,12 +192,12 @@
 
 .axis-y {
   position: absolute;
-  inset: 0 auto 1.55rem 0;
-  width: 3.25rem;
+  inset: 0 auto 1.2rem 0;
+  width: 2.65rem;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
   color: #64748b;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   text-align: right;
 }
 
@@ -205,27 +205,27 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  left: 4rem;
+  left: 3.2rem;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   color: #64748b;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
 }
 
 .bar-chart {
   position: relative;
-  height: 300px;
-  padding: 0 0 1.55rem 4rem;
+  height: 230px;
+  padding: 0 0 1.2rem 3.2rem;
 }
 
 .bar-scale {
   position: absolute;
-  inset: 0 auto 1.55rem 0;
-  width: 3.25rem;
+  inset: 0 auto 1.2rem 0;
+  width: 2.65rem;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
   color: #64748b;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   text-align: right;
 }
 
@@ -234,7 +234,7 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   align-items: flex-end;
-  gap: 2rem;
+  gap: 1.25rem;
   border-left: 2px solid var(--app-border);
   border-bottom: 2px solid var(--app-border);
   background:
