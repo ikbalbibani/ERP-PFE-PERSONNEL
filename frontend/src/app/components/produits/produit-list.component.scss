@@ -3,6 +3,11 @@
   background: var(--app-bg);
 }
 
+.crud-page:has(form.data-panel) {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
 .page-head,
 .data-panel,
 .state-panel {
@@ -31,6 +36,10 @@
   p {
     margin: 0.25rem 0 0;
     color: var(--app-muted);
+  }
+
+  .btn {
+    min-width: 112px;
   }
 }
 
@@ -152,6 +161,149 @@
 .data-panel {
   overflow: hidden;
   padding: 0;
+}
+
+form.data-panel {
+  overflow: visible;
+  padding: 1.75rem;
+  border-radius: 1.5rem;
+}
+
+form.data-panel .row {
+  --bs-gutter-x: 1.25rem;
+  --bs-gutter-y: 1.15rem;
+}
+
+form.data-panel .col-md-2,
+form.data-panel .col-md-3,
+form.data-panel .col-md-4,
+form.data-panel .col-md-5,
+form.data-panel .col-md-6,
+form.data-panel .col-md-12,
+form.data-panel .col-12 {
+  display: flex;
+  flex-direction: column;
+}
+
+form.data-panel .form-label {
+  margin-bottom: 0.45rem;
+  color: var(--app-text);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+form.data-panel .form-control,
+form.data-panel .form-select,
+form.data-panel select.form-control,
+form.data-panel textarea.form-control,
+form.data-panel .dropdown-toggle.form-control {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.72rem 0.95rem;
+  color: var(--app-text);
+  background: var(--app-surface);
+  border: 1px solid rgba(110, 123, 108, 0.28);
+  border-radius: 0.75rem;
+  box-shadow: none;
+  font-size: 0.95rem;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+form.data-panel textarea.form-control {
+  min-height: 104px;
+  resize: vertical;
+}
+
+form.data-panel .form-control:focus,
+form.data-panel .form-select:focus,
+form.data-panel select.form-control:focus,
+form.data-panel textarea.form-control:focus,
+form.data-panel .dropdown-toggle.form-control:focus {
+  background: #ffffff;
+  border-color: rgba(31, 168, 74, 0.68);
+  box-shadow: 0 0 0 4px var(--app-primary-soft);
+}
+
+form.data-panel .form-control:disabled,
+form.data-panel select.form-control:disabled {
+  color: var(--app-muted);
+  background: var(--app-surface-soft);
+  cursor: not-allowed;
+}
+
+form.data-panel small {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+}
+
+form.data-panel .form-check {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba(110, 123, 108, 0.18);
+  border-radius: 0.75rem;
+  background: var(--app-surface-soft);
+  color: var(--app-text);
+  font-weight: 700;
+}
+
+form.data-panel .form-check-input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  border-color: rgba(110, 123, 108, 0.44);
+  cursor: pointer;
+}
+
+form.data-panel .form-check-input:checked {
+  background-color: var(--app-primary);
+  border-color: var(--app-primary);
+}
+
+form.data-panel .form-check-label {
+  cursor: pointer;
+}
+
+.form-actions,
+form.data-panel > .d-flex.justify-content-end {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(189, 202, 185, 0.36);
+}
+
+form.data-panel .btn {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  font-weight: 800;
+}
+
+form.data-panel .btn-primary {
+  min-width: 142px;
+  border: 0;
+  background: var(--app-gradient);
+  box-shadow: 0 12px 24px rgba(0, 92, 186, 0.16);
+}
+
+form.data-panel .btn-outline-secondary {
+  min-width: 108px;
+  color: var(--app-muted);
+  background: rgba(255, 255, 255, 0.68);
+  border-color: rgba(110, 123, 108, 0.24);
+}
+
+form.data-panel .dropdown-menu {
+  border-color: rgba(110, 123, 108, 0.2);
+  border-radius: 0.9rem;
+  box-shadow: var(--app-shadow-strong);
 }
 
 .table {
