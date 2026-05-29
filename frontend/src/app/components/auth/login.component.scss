@@ -64,37 +64,11 @@
   overflow: hidden;
 }
 
-.visual-device {
-  width: min(72%, 410px);
-  aspect-ratio: 16 / 10;
-  display: grid;
-  place-items: center;
-  border-radius: 2rem;
-  background:
-    linear-gradient(160deg, rgba(252, 249, 248, 0.18), rgba(80, 149, 254, 0.08)),
-    #15191a;
-  transform: perspective(900px) rotateX(58deg) rotateZ(-18deg);
-  box-shadow: 0 44px 70px rgba(0, 0, 0, 0.45);
-}
-
-.visual-icon {
-  width: 86px;
-  height: 86px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.38);
-  color: #1fa84a;
-
-  svg {
-    width: 42px;
-    height: 42px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+.hero-logo {
+  width: min(86%, 470px);
+  display: block;
+  border-radius: 1.25rem;
+  filter: saturate(1.08) contrast(1.05);
 }
 
 .trusted-row {
@@ -149,16 +123,12 @@
   }
 }
 
-.brand-mark {
-  width: 46px;
-  height: 46px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #1fa84a 0%, #0066cc 100%);
-  color: #ffffff;
-  font-weight: 800;
+.brand-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
 }
 
 .form-label,

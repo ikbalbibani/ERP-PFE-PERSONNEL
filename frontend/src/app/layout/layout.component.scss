@@ -60,6 +60,16 @@
   }
 }
 
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(0, 92, 186, 0.18);
+}
+
 .brand-copy {
   display: grid;
   gap: 0.1rem;
